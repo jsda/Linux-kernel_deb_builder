@@ -1,1 +1,1 @@
-https://git.kernel.org/torvalds/t/linux-6.7-rc8.tar.gz
+https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-6.7.tar.xz
