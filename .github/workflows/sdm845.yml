@@ -1,4 +1,4 @@
-name: Build kernel deb packages
+name: Build kernel sdm845
 on: 
 #  push:
   schedule:
