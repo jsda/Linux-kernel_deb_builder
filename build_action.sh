@@ -16,7 +16,7 @@ pip3 install requests wget ttkthemes
 sudo apt build-dep -y linux
 neofetch
 
-
+:<<EOF
 # change dir to workplace
 cd "${GITHUB_WORKSPACE}" || exit
 
@@ -73,7 +73,7 @@ sudo make bindeb-pkg -j"$CPU_CORES"
 
 # move deb packages to artifact dir
 cd ..
-
+EOF
 
 stable=`cat /tmp/stable.txt`
 
@@ -99,7 +99,7 @@ cd linux-"$stable" || exit
 
 
 # copy config file
-cp ../config .config
+cp ../config-x/mobian/sdm845.config .config
 
 #利用scripts/config对内核进行修改，之后需要写个注释对上述提到的所以东西进行讲解
 scripts/config --disable DEBUG_INFO_X86
