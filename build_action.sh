@@ -102,24 +102,16 @@ cd linux-"$stable" || exit
 cp ../config-x/mobian/sdm845.config .config
 
 #利用scripts/config对内核进行修改，之后需要写个注释对上述提到的所以东西进行讲解
-scripts/config --disable DEBUG_INFO_X86
-scripts/config --disable DEBUG_INFO_VMCORE
-scripts/config --disable DEBUG_INFO_SPLIT
-scripts/config --disable DEBUG_INFO_BTF_MODULES
-scripts/config --disable DEBUG_INFO_DWARF_TOOLCHAIN_DEFAULT
-scripts/config --disable DEBUG_INFO_PERF
-scripts/config --disable DEBUG_INFO_BTF
-scripts/config --disable DEBUG_INFO_DWARF4
-scripts/config --disable DEBUG_INFO_REDUCED
-scripts/config --set-str SYSTEM_TRUSTED_KEYS "" 
-scripts/config --set-str SYSTEM_REVOCATION_KEYS "" 
-scripts/config --undefine DEBUG_INFO 
-scripts/config --undefine DEBUG_INFO_COMPRESSED 
-scripts/config --undefine DEBUG_INFO_REDUCED 
-scripts/config --undefine DEBUG_INFO_SPLIT 
-scripts/config --undefine GDB_SCRIPTS 
-scripts/config --set-val DEBUG_INFO_DWARF5 n 
-scripts/config --set-val DEBUG_INFO_NONE y 
+scripts/config --set-str SYSTEM_TRUSTED_KEYS ""
+scripts/config --set-str SYSTEM_REVOCATION_KEYS ""
+scripts/config --set-val CONFIG_BPF_EVENTS y
+scripts/config --set-val CONFIG_BPF_STREAM_PARSER y
+scripts/config --set-val CONFIG_DEBUG_INFO y
+scripts/config --set-val CONFIG_DEBUG_INFO_BTF y
+scripts/config --set-val CONFIG_KPROBE_EVENTS y
+scripts/config --set-val CONFIG_KPROBES y
+scripts/config --set-val CONFIG_NET_CLS_BPF y
+scripts/config --set-val  y
 
 # build deb packages
 CPU_CORES=$(($(grep -c processor < /proc/cpuinfo)*2))
