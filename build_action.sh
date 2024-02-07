@@ -111,11 +111,10 @@ scripts/config --set-val CONFIG_DEBUG_INFO_BTF y
 scripts/config --set-val CONFIG_KPROBE_EVENTS y
 scripts/config --set-val CONFIG_KPROBES y
 scripts/config --set-val CONFIG_NET_CLS_BPF y
-scripts/config --set-val  y
 
 # build deb packages
 CPU_CORES=$(($(grep -c processor < /proc/cpuinfo)*2))
-sudo make ARCH="arm64" bindeb-pkg -j"$CPU_CORES"
+sudo make ARCH="arm64" CROSS_COMPILE="aarch64-linux-gnu-" bindeb-pkg -j"$CPU_CORES"
 
 # move deb packages to artifact dir
 cd ..
