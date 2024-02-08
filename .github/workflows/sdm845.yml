@@ -32,7 +32,7 @@ jobs:
           sudo apt-get install -y curl jq gpg python3-pyquery wget xz-utils make gcc-aarch64-linux-gnu flex bison dpkg-dev bc rsync kmod cpio libssl-dev git lsb vim libelf-dev neofetch python3-pip python3-tk debhelper zstd dpkg-sig
 
       - name: Build
-        run: bash build_action.sh && echo "build=true" >> $GITHUB_OUTPUT
+        run: bash build_mobian.sh && echo "build=true" >> $GITHUB_OUTPUT
           
       - name: Compare files
         id: compare
