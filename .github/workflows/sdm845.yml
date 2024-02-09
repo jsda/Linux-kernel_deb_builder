@@ -32,7 +32,8 @@ jobs:
           sudo apt-get install -y curl jq gpg python3-pyquery wget xz-utils make gcc-aarch64-linux-gnu flex bison dpkg-dev bc rsync kmod cpio libssl-dev git lsb vim libelf-dev neofetch python3-pip python3-tk debhelper zstd dpkg-sig
 
       - name: Build
-        run: bash build_mobian.sh && echo "build=true" >> $GITHUB_OUTPUT
+        id: build
+        run: bash build_mobian.sh && echo "build=true" >> $GITHUB_OUTPUT || echo "build=false" >> $GITHUB_OUTPUT
           
       - name: Compare files
         id: compare
@@ -41,7 +42,7 @@ jobs:
 
       - name: Release Firmware
         uses: softprops/action-gh-release@master
-        if: ${{ steps.compare.outputs.build = 'true' }}
+        if: ${{ steps.compare.outputs.build != 'false' }}
         with:
           tag_name: mobian-sdm845
           files: ${{ github.workspace }}/artifact/*.*
