@@ -63,6 +63,12 @@ scripts/config --set-val CONFIG_NET_EGRESS y
 scripts/config --set-val CONFIG_NET_INGRESS y
 scripts/config --set-val CONFIG_NET_SCH_INGRESS m
 scripts/config --set-val CONFIG_XDP_SOCKETS y
+# 开启bbr
+scripts/config --set-val CONFIG_TCP_CONG_BBR y
+scripts/config --set-str CONFIG_DEFAULT_TCP_CONG "bbr"
+# 加密算法
+scripts/config --set-val CONFIG_CRYPTO_CHACHA20 y
+scripts/config --set-val CONFIG_CRYPTO_CHACHA20POLY1305 y
 
 # build deb packages
 CPU_CORES=$(($(grep -c processor < /proc/cpuinfo)*2))
