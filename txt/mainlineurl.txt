@@ -1,1 +1,1 @@
-https://git.kernel.org/torvalds/t/linux-6.8-rc3.tar.gz
+https://git.kernel.org/torvalds/t/linux-6.8-rc4.tar.gz
