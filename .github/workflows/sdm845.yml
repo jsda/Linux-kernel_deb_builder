@@ -33,8 +33,8 @@ jobs:
 
       - name: Build
         id: build
-        run: bash build_mobian.sh && echo "build=true" >> $GITHUB_OUTPUT || echo "build=false" >> $GITHUB_OUTPUT
-          
+        run: bash build_alpine.sh && echo "build=true" >> $GITHUB_OUTPUT || echo "build=false" >> $GITHUB_OUTPUT
+
       - name: Compare files
         id: compare
         run: |

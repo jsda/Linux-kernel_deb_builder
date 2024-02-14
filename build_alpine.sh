@@ -42,7 +42,7 @@ cd linux-"$stable" || exit
 
 
 # copy config file
-cp ../config-x/mobian/sdm845.config .config
+cp ../config-x/alpine/sdm845.config .config
 
 #利用scripts/config对内核进行修改，之后需要写个注释对上述提到的所以东西进行讲解
 scripts/config --set-val CONFIG_BPF y
