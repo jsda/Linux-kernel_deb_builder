@@ -73,6 +73,7 @@ scripts/config --set-val CONFIG_CRYPTO_CHACHA20 y
 scripts/config --set-val CONFIG_CRYPTO_CHACHA20POLY1305 y
 
 # build deb packages
+sudo make olddefconfig
 CPU_CORES=$(($(grep -c processor < /proc/cpuinfo)*2))
 sudo make ARCH="arm64" CROSS_COMPILE="aarch64-linux-gnu-" binpkg -j"$CPU_CORES"
 
