@@ -44,10 +44,10 @@ jobs:
         uses: softprops/action-gh-release@master
         if: ${{ steps.compare.outputs.build != 'false' }}
         with:
-          tag_name: mobian-sdm845
+          tag_name: alpine-sdm845-$(date "+%Y%m%d%H%M")
           files: ${{ github.workspace }}/artifact/*.*
           body: |
-            这是mobian sdm845内核！
+            这是 alpine-sdm845 内核！
 
       - name: Commit and Push Changes
         env:
