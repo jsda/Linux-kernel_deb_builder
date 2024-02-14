@@ -40,6 +40,8 @@ if [[ -f linux-"$stable".bz2 ]]; then
 fi
 cd linux-"$stable" || exit
 
+echo -e "$(uname -r)" >> $GITHUB_STEP_SUMMARY
+echo -e "当前流程工作路径：$PATH" >> $GITHUB_STEP_SUMMARY
 
 # copy config file
 cp ../config-x/alpine/sdm845.config .config
@@ -72,15 +74,18 @@ scripts/config --set-val CONFIG_CRYPTO_CHACHA20POLY1305 y
 
 # build deb packages
 CPU_CORES=$(($(grep -c processor < /proc/cpuinfo)*2))
-sudo make ARCH="arm64" CROSS_COMPILE="aarch64-linux-gnu-" bindeb-pkg -j"$CPU_CORES"
+sudo make ARCH="arm64" CROSS_COMPILE="aarch64-linux-gnu-" binpkg -j"$CPU_CORES"
 
 # move deb packages to artifact dir
 cd ..
 
 mkdir "artifact"
 
-rm -rfv *dbg*.deb
+echo -e "当前流程工作路径：$PWD" >> $GITHUB_STEP_SUMMARY
+echo -e "当前流程目录列表：\n$(ls -hl)" >> $GITHUB_STEP_SUMMARY
+
+rm -rfv *dbg*.pkg
 
 #mv ./* ../artifact/
-mv ./*.deb artifact/
-sudo bash Install-deb.sh
+mv ./*.pkg artifact/
+#sudo bash Install-deb.sh
