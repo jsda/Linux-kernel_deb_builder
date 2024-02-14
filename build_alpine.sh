@@ -25,7 +25,7 @@ cd "${GITHUB_WORKSPACE}" || exit
 
 stableurl=`cat /tmp/stableurl.txt`
 
-wget $stableurl    
+wget -q $stableurl    
 if [[ -f linux-"$stable".tar.xz ]]; then
     tar -xvf linux-"$stable".tar.xz
 fi
