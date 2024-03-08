@@ -67,7 +67,7 @@ scripts/config --set-val CONFIG_NET_SCH_INGRESS m
 scripts/config --set-val CONFIG_XDP_SOCKETS y
 # 开启bbr
 scripts/config --set-val CONFIG_TCP_CONG_BBR y
-scripts/config --set-str CONFIG_DEFAULT_TCP_CONG "bbr"
+# scripts/config --set-str CONFIG_DEFAULT_TCP_CONG "bbr"
 # 加密算法
 scripts/config --set-val CONFIG_CRYPTO_CHACHA20 y
 scripts/config --set-val CONFIG_CRYPTO_CHACHA20POLY1305 y
@@ -75,8 +75,8 @@ scripts/config --set-val CONFIG_CRYPTO_CHACHA20POLY1305 y
 # build deb packages
 sudo make olddefconfig
 CPU_CORES=$(($(grep -c processor < /proc/cpuinfo)*2))
-sudo make ARCH="arm64" CROSS_COMPILE="aarch64-linux-gnu-" binpkg -j"$CPU_CORES"
-
+sudo make ARCH="arm64" CROSS_COMPILE="aarch64-linux-gnu-" bindeb-pkg -j"$CPU_CORES"
+ 
 # move deb packages to artifact dir
 cd ..
 
@@ -88,5 +88,5 @@ echo -e "当前流程目录列表：\n$(ls -hl)" >> $GITHUB_STEP_SUMMARY
 rm -rfv *dbg*.pkg
 
 #mv ./* ../artifact/
-mv ./*.pkg artifact/
-#sudo bash Install-deb.sh
+mv ./*.deb artifact/
+sudo bash Install-deb.sh
