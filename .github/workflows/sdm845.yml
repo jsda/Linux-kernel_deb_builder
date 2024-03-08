@@ -33,7 +33,7 @@ jobs:
 
       - name: Build
         id: build
-        run: bash build_mobian.sh && echo "build=true" >> $GITHUB_OUTPUT || echo "build=false" >> $GITHUB_OUTPUT
+        run: bash build_mobian.sh && echo "DATE=$(date +"+%Y%m%d%H%M")" >> $GITHUB_ENV && echo "build=true" >> $GITHUB_OUTPUT || echo "build=false" >> $GITHUB_OUTPUT
 
       - name: Compare files
         id: compare
@@ -44,7 +44,7 @@ jobs:
         uses: softprops/action-gh-release@master
         if: ${{ steps.compare.outputs.build != 'false' }}
         with:
-          tag_name: mobian-sdm845-$(date "+%Y%m%d%H%M")
+          tag_name: mobian-sdm845-${{ env.DATE }}
           files: ${{ github.workspace }}/artifact/*.*
           body: |
             这是 mobian-sdm845 内核！
