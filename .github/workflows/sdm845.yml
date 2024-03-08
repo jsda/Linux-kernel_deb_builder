@@ -1,0 +1,84 @@
+name: Build kernel sdm845
+on: 
+#  push:
+  schedule:
+    # * is a special character in YAML so you have to quote this string
+    - cron:  '30 2 * * 6'
+  #手动编译
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build kernel
+    runs-on: ubuntu-latest
+    steps:
+      - name: Maximize build space
+        uses: easimon/maximize-build-space@master
+        with:
+          # 这个值是保留给系统的空间大小，之前设置太小，总会在安装依赖或者编译过程中报设备空间不足的错误而导致编译失败
+          root-reserve-mb: 4096
+          swap-size-mb: 512
+          remove-dotnet: 'true'
+          remove-android: 'true'
+
+      - name: Checkout
+        uses: actions/checkout@main
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+      - name: install dep
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y curl jq gpg python3-pyquery wget xz-utils make gcc-aarch64-linux-gnu flex bison dpkg-dev bc rsync kmod cpio libssl-dev git lsb vim libelf-dev neofetch python3-pip python3-tk debhelper zstd dpkg-sig
+
+      - name: Build
+        id: build
+        run: bash build_mobian.sh && echo "DATE=$(date "+%Y%m%d%H%M")" >> $GITHUB_ENV && echo "build=true" >> $GITHUB_OUTPUT || echo "build=false" >> $GITHUB_OUTPUT
+
+      - name: Compare files
+        id: compare
+        run: |
+          cmp --silent txt/longterm.txt /tmp/longterm.txt && cmp --silent txt/mainline.txt /tmp/mainline.txt && cmp --silent txt/stable.txt /tmp/stable.txt && echo "skip=true" >> $GITHUB_OUTPUT || echo "skip=false" >> $GITHUB_OUTPUT
+
+      - name: Release Firmware
+        uses: softprops/action-gh-release@master
+        if: ${{ steps.compare.outputs.build != 'false' }}
+        with:
+          tag_name: mobian-sdm845-${{ env.DATE }}
+          files: ${{ github.workspace }}/artifact/*.*
+          body: |
+            这是 mobian-sdm845 内核！
+
+      - name: Commit and Push Changes
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        if: ${{ steps.compare.outputs.skip != 'true' }}
+        run: |
+          git config user.name "bot"
+          git config user.email "bot@github.com"
+          ls -al
+          pwd
+          cp /tmp/mainline.txt  txt/mainline.txt
+          cp /tmp/mainlineurl.txt txt/mainlineurl.txt
+          cp /tmp/stable.txt txt/stable.txt 
+          cp /tmp/stableurl.txt txt/stableurl.txt
+          cp /tmp/longterm.txt txt/longterm.txt
+          cp /tmp/longtermurl.txt txt/longtermurl.txt 
+          git pull
+          git add txt/
+          git commit -m "Create file with kernel version"
+          git push
+
+      - name: Delete Old Releases
+        uses: dev-drprasad/delete-older-releases@master
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        with:
+          keep_latest: 3
+          delete_tags: true
+
+      - name: Delete Old Workflows
+        uses: Mattraks/delete-workflow-runs@main
+        with:
+          retain_days: 0
+          keep_minimum_runs: 3
