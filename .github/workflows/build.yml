@@ -1,10 +1,9 @@
 name: Build kernel deb packages
 on: 
-#  push:
-  workflow_dispatch:
-#  schedule:
+  push:
+  schedule:
     # * is a special character in YAML so you have to quote this string
-    # - cron:  '30 5,17 * * *'
+    - cron:  '30 5,17 * * *'
 
 jobs:
   build:
@@ -24,11 +23,11 @@ jobs:
         uses: actions/checkout@main
       - uses: actions/setup-node@v3
         with:
-          node-version: '16'
+          node-version: '20'
       - name: install dep
         run: |
           sudo apt-get update
-          sudo apt-get install -y curl jq gpg python3-pyquery wget xz-utils make gcc flex bison dpkg-dev bc rsync kmod cpio libssl-dev git lsb vim libelf-dev neofetch python3-pip python3-tk debhelper zstd dpkg-sig
+          sudo apt-get install -y curl jq gpg python3-pyquery wget xz-utils make gcc flex bison dpkg-dev bc rsync kmod cpio libssl-dev git lsb vim libelf-dev neofetch python3-pip python3-tk debhelper zstd dpkg-sig mmdebstrap qemu-user-static usrmerge binfmt-support systemd-container
 
       - name: Build
         run: bash build_action.sh
