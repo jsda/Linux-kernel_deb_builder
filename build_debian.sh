@@ -44,7 +44,7 @@ echo -e "$(uname -r)" >> $GITHUB_STEP_SUMMARY
 echo -e "当前流程工作路径：$PATH" >> $GITHUB_STEP_SUMMARY
 
 # copy config file
-cp ../config-x/debian/debian12.config .config
+cp ../config-x/debian/debian.config .config
 
 #利用scripts/config对内核进行修改，之后需要写个注释对上述提到的所以东西进行讲解
 scripts/config --set-val CONFIG_BPF y
@@ -67,10 +67,12 @@ scripts/config --set-val CONFIG_NET_SCH_INGRESS m
 scripts/config --set-val CONFIG_XDP_SOCKETS y
 # 开启bbr
 scripts/config --set-val CONFIG_TCP_CONG_BBR y
-# scripts/config --set-str CONFIG_DEFAULT_TCP_CONG "bbr"
+scripts/config --set-str CONFIG_DEFAULT_TCP_CONG "bbr"
 # 加密算法
 scripts/config --set-val CONFIG_CRYPTO_CHACHA20 y
 scripts/config --set-val CONFIG_CRYPTO_CHACHA20POLY1305 y
+# 网卡驱动mt792x
+scripts/config --set-val CONFIG_MT792x_LIB y
 
 # build deb packages
 sudo make olddefconfig
