@@ -77,7 +77,7 @@ scripts/config --set-val CONFIG_MT792x_LIB y
 # build deb packages
 sudo make olddefconfig
 CPU_CORES=$(($(grep -c processor < /proc/cpuinfo)*2))
-sudo make bindeb-pkg -j"$CPU_CORES" --initrd
+sudo make bindeb-pkg -j"$CPU_CORES"
 
 # move deb packages to artifact dir
 cd ..
