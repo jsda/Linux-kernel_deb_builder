@@ -27,16 +27,16 @@ stableurl=`cat /tmp/stableurl.txt`
 
 wget -q $stableurl    
 if [[ -f linux-"$stable".tar.xz ]]; then
-    tar -xvf linux-"$stable".tar.xz
+    tar -xf linux-"$stable".tar.xz
 fi
 if [[ -f linux-"$stable".tar.gz ]]; then
-    tar -xvf linux-"$stable".tar.gz
+    tar -xf linux-"$stable".tar.gz
 fi
 if [[ -f linux-"$stable".tar ]]; then
-    tar -xvf linux-"$stable".tar
+    tar -xf linux-"$stable".tar
 fi
 if [[ -f linux-"$stable".bz2 ]]; then
-    tar -xvf linux-"$stable".tar.bz2
+    tar -xf linux-"$stable".tar.bz2
 fi
 cd linux-"$stable" || exit
 
