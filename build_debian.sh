@@ -77,8 +77,8 @@ scripts/config --set-val CONFIG_MT792x_LIB y
 # build deb packages
 sudo make olddefconfig
 CPU_CORES=$(($(grep -c processor < /proc/cpuinfo)*2))
-# sudo make bindeb-pkg -j"$CPU_CORES" V=0
-if sudo make bindeb-pkg -j"$CPU_CORES" V=0; then
+# sudo make bindeb-pkg -j"$CPU_CORES"
+if sudo make bindeb-pkg -j"$CPU_CORES" 2>&1 | grep -E "error|not available|Failed"; then
     exit 0
 else
     sudo make bindeb-pkg -j1 2>&1 | grep -E "error|not available|Failed"
