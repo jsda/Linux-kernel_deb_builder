@@ -75,7 +75,13 @@ scripts/config --set-val CONFIG_CRYPTO_CHACHA20POLY1305 y
 # build deb packages
 sudo make olddefconfig
 CPU_CORES=$(($(grep -c processor < /proc/cpuinfo)*2))
-sudo make ARCH="arm64" CROSS_COMPILE="aarch64-linux-gnu-" bindeb-pkg -j"$CPU_CORES"
+# sudo make ARCH="arm64" CROSS_COMPILE="aarch64-linux-gnu-" bindeb-pkg -j"$CPU_CORES"
+if sudo make ARCH="arm64" CROSS_COMPILE="aarch64-linux-gnu-" bindeb-pkg -j"$CPU_CORES"; then
+    exit 0
+else
+    sudo make ARCH="arm64" CROSS_COMPILE="aarch64-linux-gnu-" bindeb-pkg -j1 2>&1 | grep -E "error|not available|Failed"
+    exit 1
+fi
 
 # move deb packages to artifact dir
 cd ..
