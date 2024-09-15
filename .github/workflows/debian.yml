@@ -33,7 +33,7 @@ jobs:
 
       - name: Build
         id: build
-        run: bash build_debian.sh && echo "DATE=$(date "+%Y%m%d%H%M")" >> $GITHUB_ENV && echo "build=true" >> $GITHUB_OUTPUT || echo "build=false" >> $GITHUB_OUTPUT
+        run: bash build_debian.sh
 
       - name: Compare files
         id: compare
@@ -74,7 +74,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
         with:
-          keep_latest: 5
+          keep_latest: 10
           delete_tags: true
 
       - name: Delete Old Workflows
