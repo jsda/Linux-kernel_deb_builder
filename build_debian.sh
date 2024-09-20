@@ -73,6 +73,12 @@ scripts/config --set-val CONFIG_CRYPTO_CHACHA20 y
 scripts/config --set-val CONFIG_CRYPTO_CHACHA20POLY1305 y
 # 网卡驱动mt792x
 scripts/config --set-val CONFIG_MT792x_LIB y
+# amdgpu
+scripts/config --set-val CONFIG_DRM_AMDGPU y
+scripts/config --set-val CONFIG_DRM_GPUVM y
+scripts/config --set-val CONFIG_DRM_VIRTIO_GPU y
+# kvm
+scripts/config --set-val CONFIG_KVM_AMD y
 
 # build deb packages
 sudo make olddefconfig
