@@ -86,8 +86,9 @@ CPU_CORES=$(($(grep -c processor < /proc/cpuinfo)*2))
 # sudo make bindeb-pkg -j"$CPU_CORES"
 if sudo make bindeb-pkg -j"$CPU_CORES" -s; then
     echo -e "编译成功" >> $GITHUB_STEP_SUMMARY
+    echo -e "编译目录列表：\n$(ls -hl $stable)" >> $GITHUB_STEP_SUMMARY
 else
-    sudo make bindeb-pkg -j1
+    sudo make bindeb-pkg -j1 || exit 1
 fi
 
 # move deb packages to artifact dir
@@ -101,5 +102,7 @@ echo -e "当前流程目录列表：\n$(ls -hl)" >> $GITHUB_STEP_SUMMARY
 rm -rfv *dbg*.deb
 
 #mv ./* ../artifact/
-mv ./*.deb artifact/ && echo "DATE=$(date "+%Y%m%d%H%M")" >> $GITHUB_ENV && echo "build=true" >> $GITHUB_OUTPUT || echo "build=false" >> $GITHUB_OUTPUT
+cp $stable/.config artifact/config.buildinfo
+cp linux-upstream* artifact/
+mv ./*.deb artifact/ && echo "VERSION=$stable" >> $GITHUB_ENV && echo "build=true" >> $GITHUB_OUTPUT || echo "build=false" >> $GITHUB_OUTPUT
 sudo bash Install-deb.sh

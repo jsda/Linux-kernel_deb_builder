@@ -2,7 +2,6 @@ name: Build kernel debian
 on: 
 #  push:
   schedule:
-    # * is a special character in YAML so you have to quote this string
     - cron:  '30 3 * * 6'
   #手动编译
   workflow_dispatch:
@@ -44,7 +43,7 @@ jobs:
         uses: softprops/action-gh-release@master
         if: ${{ steps.compare.outputs.build != 'false' }}
         with:
-          tag_name: debian-${{ env.DATE }}
+          tag_name: ${{ env.VERSION }}-debian
           files: ${{ github.workspace }}/artifact/*.*
           body: |
             这是 debian 内核！

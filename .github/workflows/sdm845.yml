@@ -1,9 +1,8 @@
 name: Build kernel sdm845
 on: 
 #  push:
-  schedule:
-    # * is a special character in YAML so you have to quote this string
-    - cron:  '30 2 * * 6'
+#  schedule:
+#    - cron:  '30 2 * * 6'
   #手动编译
   workflow_dispatch:
 
@@ -44,7 +43,7 @@ jobs:
         uses: softprops/action-gh-release@master
         if: ${{ steps.compare.outputs.build != 'false' }}
         with:
-          tag_name: mobian-sdm845-${{ env.DATE }}
+          tag_name: ${{ env.VERSION }}-mobian-sdm845
           files: ${{ github.workspace }}/artifact/*.*
           body: |
             这是 mobian-sdm845 内核！
