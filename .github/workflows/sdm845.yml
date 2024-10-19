@@ -1,8 +1,8 @@
 name: Build kernel sdm845
 on: 
 #  push:
-#  	path:
-#  		- 'txt/*'
+#    path:
+#      - 'txt/*'
 #  schedule:
 #    - cron:  '30 5 * * 6'
   #手动编译
