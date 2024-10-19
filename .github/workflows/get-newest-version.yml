@@ -33,9 +33,7 @@ jobs:
           cp /tmp/longterm.txt txt/longterm.txt
           cp /tmp/longtermurl.txt txt/longtermurl.txt
           git pull
-          git add txt/
-          git commit -m "Create file with kernel version"
-          git push || echo ""
+          git add txt/ && git commit -m "Create file with kernel version" && git push || echo ""
 
       - name: Delete Old Workflows
         uses: Mattraks/delete-workflow-runs@main

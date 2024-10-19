@@ -1,9 +1,9 @@
 name: Build kernel debian
 on: 
+  workflow_dispatch:
   push:
-    path:
+    paths:
       - 'txt/*'
-      - '!**/*'
 #  schedule:
 #    - cron:  '30 3 * * 6'
   #手动编译
