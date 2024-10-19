@@ -2,7 +2,7 @@ name: Build kernel debian
 on: 
   workflow_dispatch:
   push:
-    paths:
+    path:
       - 'txt/*'
 #  schedule:
 #    - cron:  '30 3 * * 6'
