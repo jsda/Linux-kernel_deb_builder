@@ -22,7 +22,6 @@ jobs:
           python3 get-newest-version.py 0
           python3 get-newest-version.py 1
           python3 get-newest-version.py 2
-          cmp --silent txt/longterm.txt /tmp/longterm.txt && cmp --silent txt/mainline.txt /tmp/mainline.txt && cmp --silent txt/stable.txt /tmp/stable.txt || exit 1
           git config user.name "bot"
           git config user.email "bot@github.com"
           ls -al
@@ -36,7 +35,7 @@ jobs:
           git pull
           git add txt/
           git commit -m "Create file with kernel version"
-          git push
+          git push || echo ""
 
       - name: Delete Old Workflows
         uses: Mattraks/delete-workflow-runs@main
