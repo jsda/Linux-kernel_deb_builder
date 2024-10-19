@@ -93,5 +93,5 @@ rm -rfv *dbg*.deb
 #mv ./* ../artifact/
 cp linux-"$stable"/.config artifact/config.buildinfo
 cp linux-upstream* artifact/
-mv ./*.deb artifact/
+mv ./*.deb artifact/ && echo "VERSION=$stable" >> $GITHUB_ENV && echo "build=true" >> $GITHUB_OUTPUT || echo "build=false" >> $GITHUB_OUTPUT
 sudo bash Install-deb.sh

@@ -18,6 +18,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
         run: |
+          sudo apt-get update && sudo apt-get install -y python3-pyquery
           python3 get-newest-version.py 0
           python3 get-newest-version.py 1
           python3 get-newest-version.py 2

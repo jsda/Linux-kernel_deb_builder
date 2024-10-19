@@ -38,6 +38,7 @@ jobs:
 
       - name: Release Firmware
         uses: softprops/action-gh-release@master
+        if: ${{ steps.compare.outputs.build != 'false' }}
         with:
           tag_name: ${{ env.VERSION }}-mobian-sdm845
           files: ${{ github.workspace }}/artifact/*.*
