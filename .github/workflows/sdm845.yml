@@ -1,7 +1,7 @@
 name: Build kernel sdm845
 on: 
 #  push:
-#    path:
+#    paths:
 #      - 'txt/*'
 #      - '!**/*'
 #  schedule:
