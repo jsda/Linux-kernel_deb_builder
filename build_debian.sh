@@ -1,13 +1,5 @@
 #!/usr/bin/env bash
 
-python3 get-newest-version.py 0
-python3 get-newest-version.py 1
-python3 get-newest-version.py 2
-mainline=`cat /tmp/mainline.txt`
-mainlineurl=`cat /tmp/mainlineurl.txt`
-MAINVERSION=`expr substr mainline 1 1`
-SHOWVERSION=mainline
-
 # add deb-src to sources.list
 sed -i "/deb-src/s/# //g" /etc/apt/sources.list
 
@@ -16,13 +8,10 @@ pip3 install requests wget ttkthemes
 sudo apt build-dep -y linux
 neofetch
 
-
-
-stable=`cat /tmp/stable.txt`
-
 # change dir to workplace
 cd "${GITHUB_WORKSPACE}" || exit
 
+stable=`cat /tmp/stable.txt`
 stableurl=`cat /tmp/stableurl.txt`
 
 wget -q $stableurl    
@@ -86,7 +75,7 @@ CPU_CORES=$(($(grep -c processor < /proc/cpuinfo)*2))
 # sudo make bindeb-pkg -j"$CPU_CORES"
 if sudo make bindeb-pkg -j"$CPU_CORES" -s; then
     echo -e "编译成功" >> $GITHUB_STEP_SUMMARY
-    echo -e "编译目录列表：\n$(ls -hl $stable)" >> $GITHUB_STEP_SUMMARY
+    echo -e "编译目录列表：\n$(ls -hl linux-"$stable")" >> $GITHUB_STEP_SUMMARY
 else
     sudo make bindeb-pkg -j1 || exit 1
 fi
@@ -102,7 +91,7 @@ echo -e "当前流程目录列表：\n$(ls -hl)" >> $GITHUB_STEP_SUMMARY
 rm -rfv *dbg*.deb
 
 #mv ./* ../artifact/
-cp $stable/.config artifact/config.buildinfo
+cp linux-"$stable"/.config artifact/config.buildinfo
 cp linux-upstream* artifact/
-mv ./*.deb artifact/ && echo "VERSION=$stable" >> $GITHUB_ENV && echo "build=true" >> $GITHUB_OUTPUT || echo "build=false" >> $GITHUB_OUTPUT
+mv ./*.deb artifact/
 sudo bash Install-deb.sh
