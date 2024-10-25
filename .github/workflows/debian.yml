@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
   push:
     paths:
-      - 'txt/*'
+      - '**txt/*.txt'
 #  schedule:
 #    - cron:  '30 3 * * 6'
 
@@ -23,7 +23,7 @@ jobs:
 
       - name: Checkout
         uses: actions/checkout@main
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@main
         with:
           node-version: '20'
       - name: install dep

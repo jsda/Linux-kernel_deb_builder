@@ -11,8 +11,8 @@ neofetch
 # change dir to workplace
 cd "${GITHUB_WORKSPACE}" || exit
 
-stable=`cat /tmp/stable.txt`
-stableurl=`cat /tmp/stableurl.txt`
+stable=`cat txt/stable.txt`
+stableurl=`cat txt/stableurl.txt`
 
 wget -q $stableurl    
 if [[ -f linux-"$stable".tar.xz ]]; then
