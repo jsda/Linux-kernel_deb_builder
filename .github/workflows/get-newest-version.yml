@@ -2,7 +2,7 @@ name: get-newest-version
 on: 
 #  push:
   schedule:
-    - cron:  '30 3 * * 6'
+    - cron:  '30 3 * * 5,6'
   #手动编译
   workflow_dispatch:
 
