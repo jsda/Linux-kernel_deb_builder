@@ -1,1 +1,1 @@
-https://cdn.kernel.org/pub/linux/kernel/v7.x/linux-7.0.tar.xz
+https://git.kernel.org/torvalds/t/linux-7.1-rc1.tar.gz
