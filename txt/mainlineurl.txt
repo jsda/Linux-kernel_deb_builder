@@ -1,1 +1,1 @@
-https://git.kernel.org/torvalds/t/linux-7.1-rc5.tar.gz
+https://git.kernel.org/torvalds/t/linux-7.1-rc6.tar.gz
