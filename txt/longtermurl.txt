@@ -1,1 +1,1 @@
-https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-6.18.34.tar.xz
+https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-6.18.35.tar.xz
