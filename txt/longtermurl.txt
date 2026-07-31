@@ -1,1 +1,1 @@
-https://cdn.kernel.org/pub/linux/kernel/v7.x/linux-7.0.14.tar.xz
+https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-6.18.41.tar.xz
